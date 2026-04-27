@@ -13,6 +13,7 @@ html, body {
   font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   background: #f7fbfc;
   color: #1a2e35;
+  overscroll-behavior: none;
 }
 
 body { display: flex; }
@@ -27,6 +28,8 @@ body { display: flex; }
   flex-shrink: 0;
   height: 100vh;
 }
+
+.drawer-handle { display: none; }
 
 .sidebar h3 {
   margin: 0 0 12px;
@@ -115,39 +118,159 @@ body { display: flex; }
 
 .block-name { flex: 1; }
 
-/* ===== MAP AREA ===== */
+/* ===== MAP AREA — pan/zoom ===== */
 .map-area {
   flex: 1;
-  overflow: auto;
-  padding: 20px;
+  position: relative;
+  overflow: hidden;
   background: #eef4f6;
   min-width: 0;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .map-area > svg {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border-radius: 4px;
+  cursor: grab;
+  will-change: transform;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  body { flex-direction: column; }
-  .sidebar { width: 100%; height: auto; max-height: 45vh; border-right: none; border-bottom: 1px solid #d0e8ec; }
-  .map-area { height: auto; min-height: 55vh; }
+.map-area > svg:active { cursor: grabbing; }
+
+/* Reset-zoom button */
+.zoom-reset {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #d0e8ec;
+  background: white;
+  color: #14707a;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 0;
+}
+
+.zoom-reset:hover { background: #f0f8fa; }
+.zoom-reset:active { background: #e0f0f4; }
+.zoom-reset svg { width: 20px; height: 20px; display: block; }
+
+/* ===== DRAWER (mobile) ===== */
+.drawer-toggle {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: #14707a;
+  color: white;
+  border: none;
+  border-radius: 28px;
+  padding: 12px 22px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 16px rgba(20, 112, 122, 0.3);
+  cursor: pointer;
+  z-index: 50;
+}
+
+.drawer-toggle:active { background: #0d4f56; }
+
+.drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 90;
+}
+
+.drawer-backdrop.show { display: block; }
+
+/* ===== MOBILE LAYOUT ===== */
+@media (max-width: 700px) {
+  body { display: block; }
+
+  .map-area {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+  }
+
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 78vh;
+    height: 78dvh;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    border-right: none;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    padding-top: 4px;
+    z-index: 100;
+  }
+
+  .sidebar.open { transform: translateY(0); }
+
+  .drawer-handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: #d0e8ec;
+    border-radius: 2px;
+    margin: 6px auto 14px;
+  }
+
+  .drawer-toggle { display: block; }
+
+  .zoom-reset {
+    bottom: 76px;
+    top: auto;
+    right: 16px;
+  }
+
+  /* Bigger touch targets on mobile */
+  .block-item {
+    min-height: 44px;
+    padding: 8px 6px;
+    font-size: 14px;
+  }
+
+  .block-item input[type="checkbox"] {
+    transform: scale(1.25);
+    margin-right: 12px;
+  }
+
+  .presets button {
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
 }
 </style>
 </head>
 <body>
   <aside class="sidebar">
+    <div class="drawer-handle" aria-hidden="true"></div>
     <h3>Blocks</h3>
     <div class="presets">
           <button data-preset="all">Show all</button>
@@ -1109,12 +1232,22 @@ body { display: flex; }
     <text x="1384" y="136" font-size="12" fill="#1a2e35">Digital nerve block</text>
   </g>
 </svg>
+    <button class="zoom-reset" aria-label="Reset zoom" title="Reset zoom">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/>
+      </svg>
+    </button>
   </section>
+
+  <button class="drawer-toggle" aria-label="Open block selector">Blocos</button>
+  <div class="drawer-backdrop" aria-hidden="true"></div>
 
 <script>
 (() => {
   const PRESETS = {"all": ["isb", "stb", "ssnb", "sc", "lsib", "ccb", "axb", "anb", "itm", "icbn", "midhum", "melb", "relb", "uelb", "lcnf", "mfa", "ufa", "radfa", "pin", "digital"], "none": [], "plan-a": ["isb", "axb"], "plexus": ["isb", "sc", "lsib", "ccb", "axb"], "diaphragm-sparing": ["stb", "ssnb", "anb", "itm", "ccb"], "distal": ["melb", "relb", "uelb", "lcnf", "mfa", "ufa", "radfa", "pin", "digital"], "selective": ["ssnb", "anb", "itm", "icbn", "lcnf", "pin"]};
 
+  // ===== Block toggles =====
   function setBlockVisible(blockId, visible) {
     const display = visible ? '' : 'none';
     ['boxes', 'pills'].forEach(suffix => {
@@ -1139,6 +1272,98 @@ body { display: flex; }
   document.querySelectorAll('.presets button').forEach(btn => {
     btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
   });
+
+  // ===== Drawer (mobile) =====
+  const sidebar = document.querySelector('.sidebar');
+  const drawerToggle = document.querySelector('.drawer-toggle');
+  const backdrop = document.querySelector('.drawer-backdrop');
+  function openDrawer() { sidebar.classList.add('open'); backdrop.classList.add('show'); }
+  function closeDrawer() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+  drawerToggle.addEventListener('click', openDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+
+  // ===== Pan / pinch-zoom on the map =====
+  const mapArea = document.querySelector('.map-area');
+  const svg = mapArea.querySelector('svg');
+  const zoomReset = document.querySelector('.zoom-reset');
+
+  let scale = 1, tx = 0, ty = 0;
+  const MIN_SCALE = 0.5, MAX_SCALE = 8;
+  const clampScale = s => Math.max(MIN_SCALE, Math.min(MAX_SCALE, s));
+
+  function apply() {
+    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  }
+  function resetView() { scale = 1; tx = 0; ty = 0; apply(); }
+  zoomReset.addEventListener('click', resetView);
+
+  const pointers = new Map();
+
+  mapArea.addEventListener('pointerdown', e => {
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    try { mapArea.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+
+  mapArea.addEventListener('pointermove', e => {
+    if (!pointers.has(e.pointerId)) return;
+    // Snapshot positions BEFORE updating, so we can compute deltas correctly
+    const prevAll = new Map();
+    for (const [id, pos] of pointers) prevAll.set(id, { x: pos.x, y: pos.y });
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.size === 1) {
+      // Single-finger / mouse drag — pure pan
+      const prev = prevAll.get(e.pointerId);
+      tx += e.clientX - prev.x;
+      ty += e.clientY - prev.y;
+    } else if (pointers.size >= 2) {
+      // Multi-finger — combined pan + pinch zoom
+      const prevPts = [...prevAll.values()].slice(0, 2);
+      const newPts  = [...pointers.values()].slice(0, 2);
+      const prevMid = { x: (prevPts[0].x + prevPts[1].x) / 2, y: (prevPts[0].y + prevPts[1].y) / 2 };
+      const newMid  = { x: (newPts[0].x + newPts[1].x) / 2,   y: (newPts[0].y + newPts[1].y) / 2   };
+      const prevDist = Math.hypot(prevPts[0].x - prevPts[1].x, prevPts[0].y - prevPts[1].y) || 1;
+      const newDist  = Math.hypot(newPts[0].x - newPts[1].x,   newPts[0].y - newPts[1].y);
+
+      // Apply pan from midpoint delta
+      tx += newMid.x - prevMid.x;
+      ty += newMid.y - prevMid.y;
+
+      // Apply zoom anchored at new midpoint
+      const rect = mapArea.getBoundingClientRect();
+      const cx = newMid.x - rect.left;
+      const cy = newMid.y - rect.top;
+      const newScale = clampScale(scale * (newDist / prevDist));
+      const f = newScale / scale;
+      tx = cx - f * (cx - tx);
+      ty = cy - f * (cy - ty);
+      scale = newScale;
+    }
+    apply();
+  });
+
+  function endPointer(e) { pointers.delete(e.pointerId); }
+  mapArea.addEventListener('pointerup', endPointer);
+  mapArea.addEventListener('pointercancel', endPointer);
+
+  // Mouse wheel + trackpad pinch-zoom
+  mapArea.addEventListener('wheel', e => {
+    e.preventDefault();
+    // Smooth exponential zoom (works for both wheel deltas and trackpad pinches)
+    const factor = Math.exp(-e.deltaY * 0.005);
+    const rect = mapArea.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+    const newScale = clampScale(scale * factor);
+    const f = newScale / scale;
+    tx = cx - f * (cx - tx);
+    ty = cy - f * (cy - ty);
+    scale = newScale;
+    apply();
+  }, { passive: false });
+
+  // Double-click / double-tap to reset
+  mapArea.addEventListener('dblclick', resetView);
 })();
 </script>
 </body>
