@@ -137,10 +137,9 @@ body { display: flex; }
   left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: 0 0;
   background: white;
   cursor: grab;
-  will-change: transform;
+  /* viewBox is mutated in JS for pan/zoom — keeps rendering vector-crisp */
 }
 
 .map-area > svg:active { cursor: grabbing; }
@@ -1240,7 +1239,7 @@ body { display: flex; }
     </button>
   </section>
 
-  <button class="drawer-toggle" aria-label="Open block selector">Blocos</button>
+  <button class="drawer-toggle" aria-label="Open block selector">Blocks</button>
   <div class="drawer-backdrop" aria-hidden="true"></div>
 
 <script>
@@ -1282,21 +1281,75 @@ body { display: flex; }
   drawerToggle.addEventListener('click', openDrawer);
   backdrop.addEventListener('click', closeDrawer);
 
-  // ===== Pan / pinch-zoom on the map =====
+  // ===== Pan / pinch-zoom on the map (via SVG viewBox manipulation) =====
+  // Mutating viewBox keeps every zoom level vector-crisp, unlike CSS
+  // transform: scale() which rasterizes the SVG at its layout size and
+  // scales the resulting bitmap.
   const mapArea = document.querySelector('.map-area');
   const svg = mapArea.querySelector('svg');
   const zoomReset = document.querySelector('.zoom-reset');
 
-  let scale = 1, tx = 0, ty = 0;
-  const MIN_SCALE = 0.5, MAX_SCALE = 8;
+  // Capture the original viewBox as the "100% zoom" baseline
+  const initialVb = svg.getAttribute('viewBox').split(/[\s,]+/).map(Number);
+  const [I_VX, I_VY, I_VW, I_VH] = initialVb;
+  let vx = I_VX, vy = I_VY, vw = I_VW, vh = I_VH;
+
+  const MIN_SCALE = 0.5, MAX_SCALE = 12;     // 1× = original viewBox
   const clampScale = s => Math.max(MIN_SCALE, Math.min(MAX_SCALE, s));
 
-  function apply() {
-    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  function applyViewBox() {
+    svg.setAttribute('viewBox', `${vx} ${vy} ${vw} ${vh}`);
   }
-  function resetView() { scale = 1; tx = 0; ty = 0; apply(); }
+
+  // Compute SVG element CSS box + letterbox offsets ('meet' aspect-fit).
+  function viewMetrics() {
+    const r = svg.getBoundingClientRect();
+    const k = Math.min(r.width / vw, r.height / vh); // px per viewBox-unit
+    const ox = (r.width  - k * vw) / 2;
+    const oy = (r.height - k * vh) / 2;
+    return { rect: r, k, ox, oy };
+  }
+
+  function clientToVb(clientX, clientY) {
+    const m = viewMetrics();
+    const sx = clientX - m.rect.left;
+    const sy = clientY - m.rect.top;
+    return {
+      x: vx + (sx - m.ox) / m.k,
+      y: vy + (sy - m.oy) / m.k,
+      sx, sy, m,
+    };
+  }
+
+  function pan(dxScreen, dyScreen) {
+    const m = viewMetrics();
+    vx -= dxScreen / m.k;
+    vy -= dyScreen / m.k;
+    applyViewBox();
+  }
+
+  function zoomAt(factor, clientX, clientY) {
+    const before = clientToVb(clientX, clientY);
+    const oldScale = I_VW / vw;
+    const newScale = clampScale(oldScale * factor);
+    const realFactor = newScale / oldScale;
+    if (realFactor === 1) return;
+    vw = I_VW / newScale;
+    vh = I_VH / newScale;
+    // Letterbox offsets are unchanged because aspect is preserved.
+    const newK = before.m.k * realFactor;
+    vx = before.x - (before.sx - before.m.ox) / newK;
+    vy = before.y - (before.sy - before.m.oy) / newK;
+    applyViewBox();
+  }
+
+  function resetView() {
+    vx = I_VX; vy = I_VY; vw = I_VW; vh = I_VH;
+    applyViewBox();
+  }
   zoomReset.addEventListener('click', resetView);
 
+  // Pointer events (touch + mouse + pen)
   const pointers = new Map();
 
   mapArea.addEventListener('pointerdown', e => {
@@ -1306,18 +1359,14 @@ body { display: flex; }
 
   mapArea.addEventListener('pointermove', e => {
     if (!pointers.has(e.pointerId)) return;
-    // Snapshot positions BEFORE updating, so we can compute deltas correctly
     const prevAll = new Map();
     for (const [id, pos] of pointers) prevAll.set(id, { x: pos.x, y: pos.y });
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
     if (pointers.size === 1) {
-      // Single-finger / mouse drag — pure pan
       const prev = prevAll.get(e.pointerId);
-      tx += e.clientX - prev.x;
-      ty += e.clientY - prev.y;
+      pan(e.clientX - prev.x, e.clientY - prev.y);
     } else if (pointers.size >= 2) {
-      // Multi-finger — combined pan + pinch zoom
       const prevPts = [...prevAll.values()].slice(0, 2);
       const newPts  = [...pointers.values()].slice(0, 2);
       const prevMid = { x: (prevPts[0].x + prevPts[1].x) / 2, y: (prevPts[0].y + prevPts[1].y) / 2 };
@@ -1325,21 +1374,11 @@ body { display: flex; }
       const prevDist = Math.hypot(prevPts[0].x - prevPts[1].x, prevPts[0].y - prevPts[1].y) || 1;
       const newDist  = Math.hypot(newPts[0].x - newPts[1].x,   newPts[0].y - newPts[1].y);
 
-      // Apply pan from midpoint delta
-      tx += newMid.x - prevMid.x;
-      ty += newMid.y - prevMid.y;
-
-      // Apply zoom anchored at new midpoint
-      const rect = mapArea.getBoundingClientRect();
-      const cx = newMid.x - rect.left;
-      const cy = newMid.y - rect.top;
-      const newScale = clampScale(scale * (newDist / prevDist));
-      const f = newScale / scale;
-      tx = cx - f * (cx - tx);
-      ty = cy - f * (cy - ty);
-      scale = newScale;
+      // Pan by midpoint delta first
+      pan(newMid.x - prevMid.x, newMid.y - prevMid.y);
+      // Then zoom anchored at new midpoint
+      zoomAt(newDist / prevDist, newMid.x, newMid.y);
     }
-    apply();
   });
 
   function endPointer(e) { pointers.delete(e.pointerId); }
@@ -1349,17 +1388,8 @@ body { display: flex; }
   // Mouse wheel + trackpad pinch-zoom
   mapArea.addEventListener('wheel', e => {
     e.preventDefault();
-    // Smooth exponential zoom (works for both wheel deltas and trackpad pinches)
     const factor = Math.exp(-e.deltaY * 0.005);
-    const rect = mapArea.getBoundingClientRect();
-    const cx = e.clientX - rect.left;
-    const cy = e.clientY - rect.top;
-    const newScale = clampScale(scale * factor);
-    const f = newScale / scale;
-    tx = cx - f * (cx - tx);
-    ty = cy - f * (cy - ty);
-    scale = newScale;
-    apply();
+    zoomAt(factor, e.clientX, e.clientY);
   }, { passive: false });
 
   // Double-click / double-tap to reset
