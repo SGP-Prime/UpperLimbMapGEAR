@@ -201,7 +201,9 @@ body { display: flex; }
 .drawer-backdrop.show { display: block; }
 
 /* ===== MOBILE LAYOUT ===== */
-@media (max-width: 700px) {
+/* Trigger drawer mode on narrow viewports (portrait phones) AND on short
+   viewports (landscape phones, where the height is the bottleneck). */
+@media (max-width: 700px), (max-height: 500px) {
   body { display: block; }
 
   .map-area {
