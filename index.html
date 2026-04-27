@@ -802,9 +802,77 @@ body { display: flex; }
   <path d="M 124 820 C 320 920, 550 980, 825 985" class="path-icbn"/>
   <text x="430" y="935" text-anchor="middle" class="lbl" font-style="italic" fill="#b2771e">Intercostobrachial nerve</text>
 
+  <g>
+    <circle cx="110" cy="220" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="110" y="226" text-anchor="middle" class="lbl-root">C5</text>
+    <circle cx="110" cy="280" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="110" y="286" text-anchor="middle" class="lbl-root">C6</text>
+    <circle cx="110" cy="370" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="110" y="376" text-anchor="middle" class="lbl-root">C7</text>
+    <circle cx="110" cy="500" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="110" y="506" text-anchor="middle" class="lbl-root">C8</text>
+    <circle cx="110" cy="560" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="110" y="566" text-anchor="middle" class="lbl-root">T1</text>
+  </g>
 
-  <!-- BLOCK OVERLAYS — boxes first, pills second -->
-  <g class="block-overlay-boxes">
+  
+
+  <g>
+    <rect x="290" y="235" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="340" y="254" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">SUPERIOR</text>
+    <rect x="290" y="355" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="340" y="374" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">MIDDLE</text>
+    <rect x="290" y="515" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
+    <text x="340" y="534" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">INFERIOR</text>
+  </g>
+
+  <g>
+    <rect x="525" y="211" width="90" height="18" rx="9" class="station" stroke="#B33A3A" stroke-width="2.5"/>
+    <text x="570" y="223" text-anchor="middle" class="lbl-pill-div" fill="#B33A3A">ANTERIOR</text>
+    <rect x="525" y="271" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
+    <text x="570" y="283" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
+    <rect x="525" y="331" width="90" height="18" rx="9" class="station" stroke="#B33A3A" stroke-width="2.5"/>
+    <text x="570" y="343" text-anchor="middle" class="lbl-pill-div" fill="#B33A3A">ANTERIOR</text>
+    <rect x="525" y="391" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
+    <text x="570" y="403" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
+    <rect x="525" y="491" width="90" height="18" rx="9" class="station" stroke="#2A9D5F" stroke-width="2.5"/>
+    <text x="570" y="503" text-anchor="middle" class="lbl-pill-div" fill="#2A9D5F">ANTERIOR</text>
+    <rect x="525" y="551" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
+    <text x="570" y="563" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
+  </g>
+
+  <g>
+    <rect x="755" y="305" width="135" height="30" rx="15" class="station" stroke="#B33A3A" stroke-width="3"/>
+    <text x="822" y="324" text-anchor="middle" class="lbl-pill-big" fill="#B33A3A">LATERAL CORD</text>
+    <rect x="755" y="485" width="135" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
+    <text x="822" y="504" text-anchor="middle" class="lbl-pill-big" fill="#14707a">POSTERIOR CORD</text>
+    <rect x="755" y="665" width="135" height="30" rx="15" class="station" stroke="#2A9D5F" stroke-width="3"/>
+    <text x="822" y="684" text-anchor="middle" class="lbl-pill-big" fill="#2A9D5F">MEDIAL CORD</text>
+  </g>
+
+  <g>
+    <rect x="1000" y="205" width="200" height="30" rx="15" class="station" stroke="#B33A3A" stroke-width="3"/>
+    <text x="1100" y="224" text-anchor="middle" class="lbl-pill-big" fill="#B33A3A">MUSCULOCUTANEOUS</text>
+    <text x="1100" y="253" text-anchor="middle" class="lbl-minor">(C5–C7)</text>
+
+    <rect x="1000" y="335" width="200" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
+    <text x="1100" y="354" text-anchor="middle" class="lbl-pill-big" fill="#14707a">AXILLARY</text>
+    <text x="1100" y="383" text-anchor="middle" class="lbl-minor">(C5–C6)</text>
+
+    <rect x="1000" y="475" width="200" height="30" rx="15" class="station" stroke="#7C3AED" stroke-width="3"/>
+    <text x="1100" y="494" text-anchor="middle" class="lbl-pill-big" fill="#7C3AED">MEDIAN</text>
+    <text x="1100" y="524" text-anchor="middle" class="lbl-minor">(C5–T1, dual root: lateral + medial cord)</text>
+
+    <rect x="1000" y="650" width="200" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
+    <text x="1100" y="669" text-anchor="middle" class="lbl-pill-big" fill="#14707a">RADIAL</text>
+    <text x="1100" y="698" text-anchor="middle" class="lbl-minor">(C5–T1)</text>
+
+    <rect x="1000" y="835" width="200" height="30" rx="15" class="station" stroke="#2A9D5F" stroke-width="3"/>
+    <text x="1100" y="854" text-anchor="middle" class="lbl-pill-big" fill="#2A9D5F">ULNAR</text>
+    <text x="1100" y="883" text-anchor="middle" class="lbl-minor">(C8–T1)</text>
+  </g>
+
+    <g class="block-overlay-boxes-above">
     <g id="block-isb-boxes" data-block="isb">
       <rect x="75" y="145" width="210" height="250" rx="12" fill="#F77F00" fill-opacity="0.08" stroke="#F77F00" stroke-width="3" stroke-dasharray="8,4"/>
     </g>
@@ -872,136 +940,6 @@ body { display: flex; }
       <line x1="1450" y1="565" x2="1450" y2="920" stroke="#6F4E37" stroke-width="2.5" stroke-dasharray="5,4" opacity="0.85"/>
     </g>
   </g>
-  <g class="block-overlay-pills">
-    <g id="block-isb-pills" data-block="isb">
-      <rect x="90" y="120" width="180" height="22" rx="11.0" fill="#F77F00"/><text x="180.0" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">INTERSCALENE BLOCK</text>
-    </g>
-    <g id="block-stb-pills" data-block="stb">
-      <rect x="325" y="290" width="195" height="22" rx="11.0" fill="#DC4900"/><text x="422.5" y="305.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SUPERIOR TRUNK BLOCK</text>
-    </g>
-    <g id="block-ssnb-pills" data-block="ssnb">
-      <rect x="462" y="120" width="95" height="22" rx="11.0" fill="#FFA94D"/><text x="509.5" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SSN BLOCK</text>
-    </g>
-    <g id="block-sc-pills" data-block="sc">
-      <rect x="342" y="174" width="220" height="22" rx="11.0" fill="#D62976"/><text x="452.0" y="189.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SUPRACLAVICULAR BLOCK</text>
-    </g>
-    <g id="block-lsib-pills" data-block="lsib">
-      <rect x="705" y="270" width="215" height="22" rx="11.0" fill="#9D4EDD"/><text x="812.5" y="285.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">INFRACLAVICULAR BLOCK</text>
-    </g>
-    <g id="block-ccb-pills" data-block="ccb">
-      <rect x="710" y="724" width="220" height="22" rx="11.0" fill="#5A189A"/><text x="820.0" y="739.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">COSTOCLAVICULAR BLOCK</text>
-    </g>
-    <g id="block-axb-pills" data-block="axb">
-      <rect x="1023" y="430" width="154" height="22" rx="11.0" fill="#023E8A"/><text x="1100.0" y="445.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">AXILLARY BLOCK</text>
-    </g>
-    <g id="block-anb-pills" data-block="anb">
-      <rect x="1015" y="393" width="170" height="22" rx="11.0" fill="#0077B6"/><text x="1100.0" y="408.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">AXILLARY N. BLOCK</text>
-    </g>
-    <g id="block-itm-pills" data-block="itm">
-      <rect x="665" y="120" width="150" height="22" rx="11.0" fill="#03045E"/><text x="740.0" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ITM PLANE BLOCK</text>
-    </g>
-    <g id="block-icbn-pills" data-block="icbn">
-      <rect x="850" y="938" width="150" height="22" rx="11.0" fill="#48CAE4"/><text x="925.0" y="953.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ICBN BLOCK</text>
-    </g>
-    <g id="block-midhum-pills" data-block="midhum">
-      <rect x="1078" y="300" width="135" height="22" rx="11.0" fill="#2A9D8F"/><text x="1145.5" y="315.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MID-HUMERAL</text>
-    </g>
-    <g id="block-melb-pills" data-block="melb">
-      <rect x="895" y="478" width="105" height="22" rx="11.0" fill="#6A0F0F"/><text x="947.5" y="493.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MED ELBOW</text>
-    </g>
-    <g id="block-relb-pills" data-block="relb">
-      <rect x="895" y="658" width="105" height="22" rx="11.0" fill="#C1121F"/><text x="947.5" y="673.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">RAD ELBOW</text>
-    </g>
-    <g id="block-uelb-pills" data-block="uelb">
-      <rect x="895" y="843" width="105" height="22" rx="11.0" fill="#E63946"/><text x="947.5" y="858.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ULN ELBOW</text>
-    </g>
-    <g id="block-lcnf-pills" data-block="lcnf">
-      <rect x="1345" y="230" width="105" height="22" rx="11.0" fill="#FF1493"/><text x="1397.5" y="245.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">LCNF BLOCK</text>
-    </g>
-    <g id="block-mfa-pills" data-block="mfa">
-      <rect x="1378" y="510" width="70" height="22" rx="11.0" fill="#4A6B2A"/><text x="1413.0" y="525.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MED FA</text>
-    </g>
-    <g id="block-ufa-pills" data-block="ufa">
-      <rect x="1370" y="868" width="80" height="22" rx="11.0" fill="#5C8001"/><text x="1410.0" y="883.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ULN FA</text>
-    </g>
-    <g id="block-radfa-pills" data-block="radfa">
-      <rect x="1370" y="691" width="80" height="22" rx="11.0" fill="#8B9A3E"/><text x="1410.0" y="706.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">RAD FA</text>
-    </g>
-    <g id="block-pin-pills" data-block="pin">
-      <rect x="1352" y="656" width="95" height="22" rx="11.0" fill="#C0CB31"/><text x="1399.5" y="671.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">PIN BLOCK</text>
-    </g>
-    <g id="block-digital-pills" data-block="digital">
-      <rect x="1500" y="962" width="150" height="22" rx="11.0" fill="#6F4E37"/><text x="1575.0" y="977.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">DIGITAL BLOCK</text>
-    </g>
-  </g>
-
-  <g>
-    <circle cx="110" cy="220" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="110" y="226" text-anchor="middle" class="lbl-root">C5</text>
-    <circle cx="110" cy="280" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="110" y="286" text-anchor="middle" class="lbl-root">C6</text>
-    <circle cx="110" cy="370" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="110" y="376" text-anchor="middle" class="lbl-root">C7</text>
-    <circle cx="110" cy="500" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="110" y="506" text-anchor="middle" class="lbl-root">C8</text>
-    <circle cx="110" cy="560" r="17" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="110" y="566" text-anchor="middle" class="lbl-root">T1</text>
-  </g>
-
-  <g>
-    <rect x="290" y="235" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="340" y="254" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">SUPERIOR</text>
-    <rect x="290" y="355" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="340" y="374" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">MIDDLE</text>
-    <rect x="290" y="515" width="100" height="30" rx="15" class="station" stroke="#5a7a82" stroke-width="3"/>
-    <text x="340" y="534" text-anchor="middle" class="lbl-pill-big" fill="#1a2e35">INFERIOR</text>
-  </g>
-
-  <g>
-    <rect x="525" y="211" width="90" height="18" rx="9" class="station" stroke="#B33A3A" stroke-width="2.5"/>
-    <text x="570" y="223" text-anchor="middle" class="lbl-pill-div" fill="#B33A3A">ANTERIOR</text>
-    <rect x="525" y="271" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
-    <text x="570" y="283" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
-    <rect x="525" y="331" width="90" height="18" rx="9" class="station" stroke="#B33A3A" stroke-width="2.5"/>
-    <text x="570" y="343" text-anchor="middle" class="lbl-pill-div" fill="#B33A3A">ANTERIOR</text>
-    <rect x="525" y="391" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
-    <text x="570" y="403" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
-    <rect x="525" y="491" width="90" height="18" rx="9" class="station" stroke="#2A9D5F" stroke-width="2.5"/>
-    <text x="570" y="503" text-anchor="middle" class="lbl-pill-div" fill="#2A9D5F">ANTERIOR</text>
-    <rect x="525" y="551" width="90" height="18" rx="9" class="station" stroke="#14707a" stroke-width="2.5"/>
-    <text x="570" y="563" text-anchor="middle" class="lbl-pill-div" fill="#14707a">POSTERIOR</text>
-  </g>
-
-  <g>
-    <rect x="755" y="305" width="135" height="30" rx="15" class="station" stroke="#B33A3A" stroke-width="3"/>
-    <text x="822" y="324" text-anchor="middle" class="lbl-pill-big" fill="#B33A3A">LATERAL CORD</text>
-    <rect x="755" y="485" width="135" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
-    <text x="822" y="504" text-anchor="middle" class="lbl-pill-big" fill="#14707a">POSTERIOR CORD</text>
-    <rect x="755" y="665" width="135" height="30" rx="15" class="station" stroke="#2A9D5F" stroke-width="3"/>
-    <text x="822" y="684" text-anchor="middle" class="lbl-pill-big" fill="#2A9D5F">MEDIAL CORD</text>
-  </g>
-
-  <g>
-    <rect x="1000" y="205" width="200" height="30" rx="15" class="station" stroke="#B33A3A" stroke-width="3"/>
-    <text x="1100" y="224" text-anchor="middle" class="lbl-pill-big" fill="#B33A3A">MUSCULOCUTANEOUS</text>
-    <text x="1100" y="253" text-anchor="middle" class="lbl-minor">(C5–C7)</text>
-
-    <rect x="1000" y="335" width="200" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
-    <text x="1100" y="354" text-anchor="middle" class="lbl-pill-big" fill="#14707a">AXILLARY</text>
-    <text x="1100" y="383" text-anchor="middle" class="lbl-minor">(C5–C6)</text>
-
-    <rect x="1000" y="475" width="200" height="30" rx="15" class="station" stroke="#7C3AED" stroke-width="3"/>
-    <text x="1100" y="494" text-anchor="middle" class="lbl-pill-big" fill="#7C3AED">MEDIAN</text>
-    <text x="1100" y="524" text-anchor="middle" class="lbl-minor">(C5–T1, dual root: lateral + medial cord)</text>
-
-    <rect x="1000" y="650" width="200" height="30" rx="15" class="station" stroke="#14707a" stroke-width="3"/>
-    <text x="1100" y="669" text-anchor="middle" class="lbl-pill-big" fill="#14707a">RADIAL</text>
-    <text x="1100" y="698" text-anchor="middle" class="lbl-minor">(C5–T1)</text>
-
-    <rect x="1000" y="835" width="200" height="30" rx="15" class="station" stroke="#2A9D5F" stroke-width="3"/>
-    <text x="1100" y="854" text-anchor="middle" class="lbl-pill-big" fill="#2A9D5F">ULNAR</text>
-    <text x="1100" y="883" text-anchor="middle" class="lbl-minor">(C8–T1)</text>
-  </g>
 
   <g>
     <circle cx="1468" cy="200" r="5" class="station-sub" stroke="#B33A3A" stroke-width="2.5"/>
@@ -1062,6 +1000,69 @@ body { display: flex; }
     <circle cx="1468" cy="920" r="5" class="station-sub" stroke="#2A9D5F" stroke-width="2.5"/>
     <text x="1478" y="916" class="lbl-small">Superficial branch → palmaris brevis (motor)</text>
     <text x="1478" y="930" class="lbl-small">+ palmar digital n. to 5th &amp; medial half of 4th finger</text>
+  </g>
+
+    <g class="block-overlay-pills">
+    <g id="block-isb-pills" data-block="isb">
+      <rect x="90" y="120" width="180" height="22" rx="11.0" fill="#F77F00"/><text x="180.0" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">INTERSCALENE BLOCK</text>
+    </g>
+    <g id="block-stb-pills" data-block="stb">
+      <rect x="325" y="290" width="195" height="22" rx="11.0" fill="#DC4900"/><text x="422.5" y="305.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SUPERIOR TRUNK BLOCK</text>
+    </g>
+    <g id="block-ssnb-pills" data-block="ssnb">
+      <rect x="462" y="120" width="95" height="22" rx="11.0" fill="#FFA94D"/><text x="509.5" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SSN BLOCK</text>
+    </g>
+    <g id="block-sc-pills" data-block="sc">
+      <rect x="342" y="174" width="220" height="22" rx="11.0" fill="#D62976"/><text x="452.0" y="189.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">SUPRACLAVICULAR BLOCK</text>
+    </g>
+    <g id="block-lsib-pills" data-block="lsib">
+      <rect x="705" y="270" width="215" height="22" rx="11.0" fill="#9D4EDD"/><text x="812.5" y="285.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">INFRACLAVICULAR BLOCK</text>
+    </g>
+    <g id="block-ccb-pills" data-block="ccb">
+      <rect x="710" y="724" width="220" height="22" rx="11.0" fill="#5A189A"/><text x="820.0" y="739.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">COSTOCLAVICULAR BLOCK</text>
+    </g>
+    <g id="block-axb-pills" data-block="axb">
+      <rect x="1023" y="430" width="154" height="22" rx="11.0" fill="#023E8A"/><text x="1100.0" y="445.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">AXILLARY BLOCK</text>
+    </g>
+    <g id="block-anb-pills" data-block="anb">
+      <rect x="1015" y="393" width="170" height="22" rx="11.0" fill="#0077B6"/><text x="1100.0" y="408.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">AXILLARY N. BLOCK</text>
+    </g>
+    <g id="block-itm-pills" data-block="itm">
+      <rect x="665" y="120" width="150" height="22" rx="11.0" fill="#03045E"/><text x="740.0" y="135.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ITM PLANE BLOCK</text>
+    </g>
+    <g id="block-icbn-pills" data-block="icbn">
+      <rect x="850" y="938" width="150" height="22" rx="11.0" fill="#48CAE4"/><text x="925.0" y="953.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ICBN BLOCK</text>
+    </g>
+    <g id="block-midhum-pills" data-block="midhum">
+      <rect x="1078" y="300" width="135" height="22" rx="11.0" fill="#2A9D8F"/><text x="1145.5" y="315.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MID-HUMERAL</text>
+    </g>
+    <g id="block-melb-pills" data-block="melb">
+      <rect x="895" y="478" width="105" height="22" rx="11.0" fill="#6A0F0F"/><text x="947.5" y="493.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MED ELBOW</text>
+    </g>
+    <g id="block-relb-pills" data-block="relb">
+      <rect x="895" y="658" width="105" height="22" rx="11.0" fill="#C1121F"/><text x="947.5" y="673.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">RAD ELBOW</text>
+    </g>
+    <g id="block-uelb-pills" data-block="uelb">
+      <rect x="895" y="843" width="105" height="22" rx="11.0" fill="#E63946"/><text x="947.5" y="858.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ULN ELBOW</text>
+    </g>
+    <g id="block-lcnf-pills" data-block="lcnf">
+      <rect x="1345" y="230" width="105" height="22" rx="11.0" fill="#FF1493"/><text x="1397.5" y="245.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">LCNF BLOCK</text>
+    </g>
+    <g id="block-mfa-pills" data-block="mfa">
+      <rect x="1378" y="510" width="70" height="22" rx="11.0" fill="#4A6B2A"/><text x="1413.0" y="525.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">MED FA</text>
+    </g>
+    <g id="block-ufa-pills" data-block="ufa">
+      <rect x="1370" y="868" width="80" height="22" rx="11.0" fill="#5C8001"/><text x="1410.0" y="883.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">ULN FA</text>
+    </g>
+    <g id="block-radfa-pills" data-block="radfa">
+      <rect x="1370" y="691" width="80" height="22" rx="11.0" fill="#8B9A3E"/><text x="1410.0" y="706.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">RAD FA</text>
+    </g>
+    <g id="block-pin-pills" data-block="pin">
+      <rect x="1352" y="656" width="95" height="22" rx="11.0" fill="#C0CB31"/><text x="1399.5" y="671.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">PIN BLOCK</text>
+    </g>
+    <g id="block-digital-pills" data-block="digital">
+      <rect x="1500" y="962" width="150" height="22" rx="11.0" fill="#6F4E37"/><text x="1575.0" y="977.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="1.2">DIGITAL BLOCK</text>
+    </g>
   </g>
 
   <g transform="translate(50, 1030)">
